@@ -2,5 +2,4 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/AspNetCoreBook/.vs/AspNetCoreBook/v16
-/AspNetCoreBook/AspNetCoreBook/obj
+/BookCoreApp/.vs/BookCoreApp
