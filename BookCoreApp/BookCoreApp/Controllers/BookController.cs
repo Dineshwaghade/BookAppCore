@@ -23,5 +23,9 @@ namespace BookCoreApp.Controllers
         {
             return _bookRepository.GetAllBooks();
         }
+        public IActionResult GetBookById(int id)
+        {
+            return View(_bookRepository.GetBookById(id));
+        }
     }
 }
