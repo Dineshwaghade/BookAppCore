@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CoreAppBook.Models
+namespace CoreAppBook.Data
 {
-    public class BookModel
+    public class Book
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -16,6 +16,5 @@ namespace CoreAppBook.Models
         public string Language { get; set; }
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
-
     }
 }

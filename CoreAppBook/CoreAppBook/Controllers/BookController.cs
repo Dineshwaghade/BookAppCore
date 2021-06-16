@@ -12,9 +12,9 @@ namespace CoreAppBook.Controllers
     {
         BookRepository _bookRepository = null;
 
-        public BookController()
+        public BookController(BookRepository bookRepository)
         {
-            _bookRepository = new BookRepository();
+            _bookRepository = bookRepository;
         }
 
         public IActionResult Index()
@@ -33,14 +33,20 @@ namespace CoreAppBook.Controllers
             return View(data);
         }
 
-        public ViewResult AddBook()
+        public ViewResult AddBook(bool isSuccess=false,int BookId=0)
         {
+            ViewBag.IsSuccess = isSuccess;
+            ViewBag.BookId = BookId;
             return View();
         }
         [HttpPost]
-        public ViewResult AddBook( BookModel model)
+        public IActionResult AddBook( BookModel model)
         {
-            
+            int id=_bookRepository.AddNewBook(model);
+            if(id>0)
+            {
+                return RedirectToAction(nameof(AddBook),new { isSuccess = true, BookId=id });
+            }
             return View();
         }
     }

@@ -1,4 +1,5 @@
-﻿using CoreAppBook.Models;
+﻿using CoreAppBook.Data;
+using CoreAppBook.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,11 @@ namespace CoreAppBook.Repository
 {
     public class BookRepository
     {
+        private readonly BookStoreContext _context = null;
+        public BookRepository(BookStoreContext context)
+        {
+            _context = context;
+        }
         public List<BookModel> GetAllBooks()
         {
             return datasource().ToList();
@@ -17,10 +23,23 @@ namespace CoreAppBook.Repository
         {
             return datasource().Where(x => x.Id == id).FirstOrDefault();
         }
-        public bool AddNewBook(BookModel model)
+        public int AddNewBook(BookModel model)
         {
-            datasource().Add(model);
-            return true;
+            var newBook = new Book()
+            {
+                Title = model.Title,
+                Author = model.Author,
+                Description = model.Description,
+                ToTalPages = model.ToTalPages,
+                Language = model.Language,
+                Category = model.Category,
+                CreatedOn = DateTime.UtcNow,
+                UpdatedOn=DateTime.UtcNow
+               
+            };
+            _context.Books.Add(newBook);
+            _context.SaveChanges();
+            return newBook.Id;
         }
         private List<BookModel> datasource()
         {
