@@ -17,6 +17,11 @@ namespace CoreAppBook.Repository
         {
             return datasource().Where(x => x.Id == id).FirstOrDefault();
         }
+        public bool AddNewBook(BookModel model)
+        {
+            datasource().Add(model);
+            return true;
+        }
         private List<BookModel> datasource()
         {
             return new List<BookModel>()

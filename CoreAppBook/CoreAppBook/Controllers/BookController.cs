@@ -32,5 +32,16 @@ namespace CoreAppBook.Controllers
             var data = _bookRepository.GetBookById(id);
             return View(data);
         }
+
+        public ViewResult AddBook()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ViewResult AddBook( BookModel model)
+        {
+            
+            return View();
+        }
     }
 }
