@@ -29,7 +29,11 @@ namespace CoreAppBook
             services.AddDbContext<BookStoreContext>(
                 options => options.UseSqlServer("Server=DINESH\\DINESHSERVER; database=BookStoreDb; Integrated Security=true;")
                 ) ;
-            //services.AddRazorPages();
+#if DEBUG
+            //To disable client side validation
+            //services.AddRazorPages().AddViewOptions(option =>
+            //option.HtmlHelperOptions.ClientValidationEnabled = false) ;
+#endif
             services.AddScoped<BookRepository, BookRepository>();
             services.AddScoped<LanguageRepository, LanguageRepository>();
         }

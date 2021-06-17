@@ -30,7 +30,6 @@ namespace CoreAppBook.Controllers
             var data= await _bookRepository.GetAllBooks();
             return View(data);
         }
-        //[Route("Book/getbook/{id}")]
         public async Task<ViewResult> GetBook(int id)
         {
             var data = await _bookRepository.GetBookById(id);

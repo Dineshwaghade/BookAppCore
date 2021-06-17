@@ -133,7 +133,6 @@ D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\bin\Debug\netcor
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\CoreAppBook.csproj.AssemblyReference.cache
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\CoreAppBook.AssemblyInfoInputs.cache
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\CoreAppBook.AssemblyInfo.cs
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\CoreAppBook.csproj.CoreCompileInputs.cache
@@ -171,3 +170,4 @@ D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcor
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\CoreAppBook.dll
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\CoreAppBook.pdb
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\CoreAppBook.genruntimeconfig.cache
+D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\CoreAppBook.csproj.AssemblyReference.cache
