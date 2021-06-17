@@ -13,10 +13,11 @@ namespace CoreAppBook.Data
 
         }
         public DbSet<Book> Books { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=DINESH\\DINESHSERVER; database=BookStoreDb; Integrated Security=true;");
-            base.OnConfiguring(optionsBuilder);
-        }
+        public DbSet<Language> Languages { get; set; }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Server=DINESH\\DINESHSERVER; database=BookStoreDb; Integrated Security=true;");
+        //    base.OnConfiguring(optionsBuilder);
+        //}
     }
 }

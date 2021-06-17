@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.EntityFrameworkCore;
 namespace CoreAppBook.Repository
 {
     public class BookRepository
@@ -14,42 +14,60 @@ namespace CoreAppBook.Repository
         {
             _context = context;
         }
-        public List<BookModel> GetAllBooks()
+        public async Task<List<BookModel>> GetAllBooks()
         {
-            return datasource().ToList();
+            var books = new List<BookModel>();
+            var data = await _context.Books
+                .Select(x=> new BookModel() { 
+                Id=x.Id,
+                Title=x.Title,
+                Author=x.Author,
+                Description=x.Description,
+                ToTalPages=x.ToTalPages,
+                CreatedOn=x.CreatedOn,
+                UpdatedOn=x.UpdatedOn,
+                LanguageId=x.LanguageId
+                })
+                .ToListAsync();
+            
+            return data;
         }
 
-        public BookModel GetBookById(int id)
+        public async Task<BookModel> GetBookById(int id)
         {
-            return datasource().Where(x => x.Id == id).FirstOrDefault();
+            var data = await _context.Books
+                .Select(x => new BookModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Author = x.Author,
+                    Description = x.Description,
+                    ToTalPages = x.ToTalPages,
+                    CreatedOn = x.CreatedOn,
+                    UpdatedOn = x.UpdatedOn,
+                    LanguageId = x.LanguageId
+                })
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
+            return data;
         }
-        public int AddNewBook(BookModel model)
+        public async Task<int> AddNewBook(BookModel model)
         {
             var newBook = new Book()
             {
                 Title = model.Title,
                 Author = model.Author,
                 Description = model.Description,
-                ToTalPages = model.ToTalPages,
-                Language = model.Language,
+                ToTalPages = model.ToTalPages.HasValue?model.ToTalPages.Value:0,
+                LanguageId = model.LanguageId,
                 Category = model.Category,
                 CreatedOn = DateTime.UtcNow,
                 UpdatedOn=DateTime.UtcNow
                
             };
-            _context.Books.Add(newBook);
-            _context.SaveChanges();
+            await _context.Books.AddAsync(newBook);
+            await _context.SaveChangesAsync();
             return newBook.Id;
         }
-        private List<BookModel> datasource()
-        {
-            return new List<BookModel>()
-            {
-                new BookModel(){Id=1,Title="Java", Author="xyz",Description="This is description for Java book",ToTalPages=100,Category="Programming",Language="English"},
-                new BookModel(){Id=2,Title="PHP", Author="xyz",Description="This is description for PHP book",ToTalPages=110,Category="Programming",Language="English"},
-                new BookModel(){Id=3,Title="C#", Author="xyz",Description="This is description for C# book",ToTalPages=120,Category="Programming",Language="English"}
 
-            };
-        }
     }
 }

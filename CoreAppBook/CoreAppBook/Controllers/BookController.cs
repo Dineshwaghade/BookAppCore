@@ -1,6 +1,7 @@
 ﻿using CoreAppBook.Models;
 using CoreAppBook.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,43 +11,59 @@ namespace CoreAppBook.Controllers
 {
     public class BookController : Controller
     {
-        BookRepository _bookRepository = null;
+        private readonly BookRepository _bookRepository = null;
+        private readonly LanguageRepository _languageRepository = null;
 
-        public BookController(BookRepository bookRepository)
+
+        public BookController(BookRepository bookRepository,LanguageRepository languageRepository)
         {
             _bookRepository = bookRepository;
+            _languageRepository = languageRepository;
         }
 
         public IActionResult Index()
         {
             return View();
         }
-        public ViewResult GetAllBooks()
+        public async Task<ViewResult> GetAllBooks()
         {
-            var data= _bookRepository.GetAllBooks();
+            var data= await _bookRepository.GetAllBooks();
             return View(data);
         }
         //[Route("Book/getbook/{id}")]
-        public ViewResult GetBook(int id)
+        public async Task<ViewResult> GetBook(int id)
         {
-            var data = _bookRepository.GetBookById(id);
+            var data = await _bookRepository.GetBookById(id);
             return View(data);
         }
 
-        public ViewResult AddBook(bool isSuccess=false,int BookId=0)
+        public async Task<ViewResult> AddBook(bool isSuccess=false,int BookId=0)
         {
+
+            //ViewBag.Language = new SelectList(new List<string>() { "hindi", "eng" });
+
+            //ViewData["Language"] = new SelectListItem(new List<LanguageModel>(){
+            //        new LanguageModel(){ Id=1,Name="English" },
+            //        new LanguageModel(){ Id=2,Name="hindi" }
+            //    }, "id", "Name");
+            ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
             ViewBag.IsSuccess = isSuccess;
             ViewBag.BookId = BookId;
             return View();
         }
         [HttpPost]
-        public IActionResult AddBook( BookModel model)
+        public async Task<IActionResult> AddBook( BookModel model)
         {
-            int id=_bookRepository.AddNewBook(model);
-            if(id>0)
+            if(ModelState.IsValid)
             {
-                return RedirectToAction(nameof(AddBook),new { isSuccess = true, BookId=id });
+                int id = await _bookRepository.AddNewBook(model);
+                if (id > 0)
+                {
+                    return RedirectToAction(nameof(AddBook), new { isSuccess = true, BookId = id });
+                }
             }
+            ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
+
             return View();
         }
     }

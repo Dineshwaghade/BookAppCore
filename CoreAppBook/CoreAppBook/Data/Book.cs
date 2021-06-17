@@ -13,7 +13,7 @@ namespace CoreAppBook.Data
         public string Description { get; set; }
         public int ToTalPages { get; set; }
         public string Category { get; set; }
-        public string Language { get; set; }
+        public int LanguageId { get; set; }
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
