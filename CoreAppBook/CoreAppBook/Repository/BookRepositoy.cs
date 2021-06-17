@@ -26,7 +26,8 @@ namespace CoreAppBook.Repository
                 ToTalPages=x.ToTalPages,
                 CreatedOn=x.CreatedOn,
                 UpdatedOn=x.UpdatedOn,
-                LanguageId=x.LanguageId
+                LanguageId=x.LanguageId,
+                Language=x.Language.Name
                 })
                 .ToListAsync();
             
@@ -45,7 +46,8 @@ namespace CoreAppBook.Repository
                     ToTalPages = x.ToTalPages,
                     CreatedOn = x.CreatedOn,
                     UpdatedOn = x.UpdatedOn,
-                    LanguageId = x.LanguageId
+                    LanguageId = x.LanguageId,
+                    Language=x.Language.Name
                 })
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
             return data;

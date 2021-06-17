@@ -24,7 +24,7 @@ namespace CoreAppBook.Models
         public int LanguageId { get; set; }
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
-        public Language Language { get; set; }
+        public string Language { get; set; }
 
     }
 }
