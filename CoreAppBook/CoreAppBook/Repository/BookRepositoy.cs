@@ -50,6 +50,7 @@ namespace CoreAppBook.Repository
                     LanguageId = x.LanguageId,
                     Language = x.Language.Name,
                     CoverImageUrl = x.CoverImageUrl,
+                    PdfUrl=x.PdfUrl,
                     Gallery = x.BookGallery.Select(a => new GalleryModel()
                     {
                         Id = a.Id,
@@ -67,12 +68,13 @@ namespace CoreAppBook.Repository
                 Title = model.Title,
                 Author = model.Author,
                 Description = model.Description,
-                ToTalPages = model.ToTalPages.HasValue?model.ToTalPages.Value:0,
+                ToTalPages = model.ToTalPages.HasValue ? model.ToTalPages.Value : 0,
                 LanguageId = model.LanguageId,
                 Category = model.Category,
                 CreatedOn = DateTime.UtcNow,
-                UpdatedOn=DateTime.UtcNow,
-                CoverImageUrl=model.CoverImageUrl
+                UpdatedOn = DateTime.UtcNow,
+                CoverImageUrl = model.CoverImageUrl,
+                PdfUrl = model.PdfUrl
                
             };
             newBook.BookGallery = new List<BookGallery>();

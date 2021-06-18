@@ -79,6 +79,12 @@ namespace CoreAppBook.Controllers
                         model.Gallery.Add(gallery);
                     }
                 }
+                if (model.BookPdf != null)
+                {
+                    string folder = "Book/pdf/";
+                    model.PdfUrl = await UploadImage(folder, model.BookPdf);
+                }
+
                 int id = await _bookRepository.AddNewBook(model);
                 if (id > 0)
                 {

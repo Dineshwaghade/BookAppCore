@@ -23,13 +23,15 @@ namespace CoreAppBook.Models
         public string Category { get; set; }
         [Required]
         public int LanguageId { get; set; }
-        public DateTime? CreatedOn { get; set; }
-        public DateTime? UpdatedOn { get; set; }
         public string Language { get; set; }
         public IFormFile CoverPhoto { get; set; }
         public string CoverImageUrl { get; set; }
         public IFormFileCollection GalleryFiles { get; set; }
         public List<GalleryModel> Gallery { get; set; }
+        public IFormFile BookPdf { get; set; }
+        public string PdfUrl { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
 
 
     }
