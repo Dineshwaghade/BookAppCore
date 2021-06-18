@@ -4,14 +4,16 @@ using CoreAppBook.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoreAppBook.Migrations
 {
     [DbContext(typeof(BookStoreContext))]
-    partial class BookStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20210618063714_newColumnAdded")]
+    partial class newColumnAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,29 +62,6 @@ namespace CoreAppBook.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("CoreAppBook.Data.BookGallery", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("BookGallery");
-                });
-
             modelBuilder.Entity("CoreAppBook.Data.Language", b =>
                 {
                     b.Property<int>("Id")
@@ -110,20 +89,6 @@ namespace CoreAppBook.Migrations
                         .IsRequired();
 
                     b.Navigation("Language");
-                });
-
-            modelBuilder.Entity("CoreAppBook.Data.BookGallery", b =>
-                {
-                    b.HasOne("CoreAppBook.Data.Book", "Book")
-                        .WithMany("BookGallery")
-                        .HasForeignKey("BookId");
-
-                    b.Navigation("Book");
-                });
-
-            modelBuilder.Entity("CoreAppBook.Data.Book", b =>
-                {
-                    b.Navigation("BookGallery");
                 });
 
             modelBuilder.Entity("CoreAppBook.Data.Language", b =>

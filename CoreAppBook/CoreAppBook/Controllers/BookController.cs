@@ -1,9 +1,12 @@
 ﻿using CoreAppBook.Models;
 using CoreAppBook.Repository;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,12 +16,14 @@ namespace CoreAppBook.Controllers
     {
         private readonly BookRepository _bookRepository = null;
         private readonly LanguageRepository _languageRepository = null;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
 
-        public BookController(BookRepository bookRepository,LanguageRepository languageRepository)
+        public BookController(BookRepository bookRepository,LanguageRepository languageRepository, IWebHostEnvironment webHostEnvironment)
         {
             _bookRepository = bookRepository;
             _languageRepository = languageRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -55,6 +60,25 @@ namespace CoreAppBook.Controllers
         {
             if(ModelState.IsValid)
             {
+                if (model.CoverPhoto != null)
+                {
+                    string folder = "Book/cover/";
+                    model.CoverImageUrl = await UploadImage(folder, model.CoverPhoto);
+                }
+                if (model.GalleryFiles != null)
+                {
+                    string folder = "Book/Gallery/";
+                    model.Gallery= new List<GalleryModel>();
+                    foreach(var file in model.GalleryFiles)
+                    {
+                        var gallery = new GalleryModel()
+                        {
+                            Name = file.FileName,
+                            Url = await UploadImage(folder, file)
+                        };
+                        model.Gallery.Add(gallery);
+                    }
+                }
                 int id = await _bookRepository.AddNewBook(model);
                 if (id > 0)
                 {
@@ -64,6 +88,14 @@ namespace CoreAppBook.Controllers
             ViewBag.Language = new SelectList(await _languageRepository.GetLanguages(), "Id", "Name");
 
             return View();
+        }
+
+        private async Task<string> UploadImage(string folder,IFormFile file)
+        {
+            folder += Guid.NewGuid().ToString() +"_"+ file.FileName;
+            string ServerFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+            await file.CopyToAsync(new FileStream(ServerFolder, FileMode.Create));
+            return "/" + folder;
         }
     }
 }

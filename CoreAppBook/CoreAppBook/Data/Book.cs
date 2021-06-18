@@ -17,5 +17,7 @@ namespace CoreAppBook.Data
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public Language Language { get; set; }
+        public string CoverImageUrl { get; set; }
+        public ICollection<BookGallery> BookGallery { get; set; }
     }
 }

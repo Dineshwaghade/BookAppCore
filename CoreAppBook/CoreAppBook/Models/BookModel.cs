@@ -1,4 +1,5 @@
 ﻿using CoreAppBook.Data;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,6 +26,11 @@ namespace CoreAppBook.Models
         public DateTime? CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public string Language { get; set; }
+        public IFormFile CoverPhoto { get; set; }
+        public string CoverImageUrl { get; set; }
+        public IFormFileCollection GalleryFiles { get; set; }
+        public List<GalleryModel> Gallery { get; set; }
+
 
     }
 }

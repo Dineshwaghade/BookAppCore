@@ -27,7 +27,8 @@ namespace CoreAppBook.Repository
                 CreatedOn=x.CreatedOn,
                 UpdatedOn=x.UpdatedOn,
                 LanguageId=x.LanguageId,
-                Language=x.Language.Name
+                Language=x.Language.Name,
+                CoverImageUrl=x.CoverImageUrl
                 })
                 .ToListAsync();
             
@@ -47,7 +48,14 @@ namespace CoreAppBook.Repository
                     CreatedOn = x.CreatedOn,
                     UpdatedOn = x.UpdatedOn,
                     LanguageId = x.LanguageId,
-                    Language=x.Language.Name
+                    Language = x.Language.Name,
+                    CoverImageUrl = x.CoverImageUrl,
+                    Gallery = x.BookGallery.Select(a => new GalleryModel()
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        Url = a.Url
+                    }).ToList()
                 })
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
             return data;
@@ -63,9 +71,20 @@ namespace CoreAppBook.Repository
                 LanguageId = model.LanguageId,
                 Category = model.Category,
                 CreatedOn = DateTime.UtcNow,
-                UpdatedOn=DateTime.UtcNow
+                UpdatedOn=DateTime.UtcNow,
+                CoverImageUrl=model.CoverImageUrl
                
             };
+            newBook.BookGallery = new List<BookGallery>();
+            foreach(var file in model.Gallery)
+            {
+                newBook.BookGallery.Add(new BookGallery()
+                {
+                    Name = file.Name,
+                    Url = file.Url
+                });
+            }
+            
             await _context.Books.AddAsync(newBook);
             await _context.SaveChangesAsync();
             return newBook.Id;
