@@ -15,9 +15,10 @@ namespace CoreAppBook
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IConfiguration _configuration=null;
+        public Startup( IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -27,7 +28,7 @@ namespace CoreAppBook
         {
             services.AddMvc();
             services.AddDbContext<BookStoreContext>(
-                options => options.UseSqlServer("Server=DINESH\\DINESHSERVER; database=BookStoreDb; Integrated Security=true;")
+                options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
                 ) ;
 #if DEBUG
             //To disable client side validation
