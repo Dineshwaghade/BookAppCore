@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoreAppBook.Repository
 {
-    public class LanguageRepository
+    public class LanguageRepository : ILanguageRepository
     {
         private readonly BookStoreContext _context = null;
         public LanguageRepository(BookStoreContext context)
@@ -21,9 +21,9 @@ namespace CoreAppBook.Repository
             var data = await _context.Languages
                 .Select(x => new LanguageModel()
                 {
-                    Id=x.Id,
-                    Name=x.Name,
-                    Description=x.Description
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description
                 })
                 .ToListAsync();
             return data;
