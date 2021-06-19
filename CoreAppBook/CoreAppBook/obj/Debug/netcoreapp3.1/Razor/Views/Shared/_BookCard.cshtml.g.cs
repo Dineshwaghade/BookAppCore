@@ -12,8 +12,15 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+#nullable restore
+#line 2 "D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\Views\_ViewImports.cshtml"
+using Microsoft.Extensions.Configuration;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"cf7fe771028e4492755d45f0c3dd7154ad6a7e66", @"/Views/Shared/_BookCard.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a9af4978b9c2bfca24ef48e96efe5f8573634464", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b0ef6334f74768506ab728d932b303ad26ece8b6", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__BookCard : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<CoreAppBook.Models.BookModel>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "Book", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -71,7 +78,7 @@ WriteAttributeValue("", 155, Model.CoverImageUrl==null?"/images/not_available.pn
 #line hidden
 #nullable disable
             WriteLiteral("</p>\r\n        <div class=\"d-flex justify-content-between align-items-center\">\r\n            <div class=\"btn-group\">\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cf7fe771028e4492755d45f0c3dd7154ad6a7e665020", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cf7fe771028e4492755d45f0c3dd7154ad6a7e665233", async() => {
                 WriteLiteral("View Details");
             }
             );

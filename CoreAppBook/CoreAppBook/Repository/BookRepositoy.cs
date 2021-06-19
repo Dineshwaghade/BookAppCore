@@ -5,14 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 namespace CoreAppBook.Repository
 {
     public class BookRepository : IBookRepository
     {
         private readonly BookStoreContext _context = null;
-        public BookRepository(BookStoreContext context)
+        private readonly IConfiguration _configuration = null;
+        public BookRepository(BookStoreContext context,IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
         public async Task<List<BookModel>> GetAllBooks()
         {
@@ -92,6 +96,30 @@ namespace CoreAppBook.Repository
             await _context.SaveChangesAsync();
             return newBook.Id;
         }
+        public async Task<List<BookModel>> GetTopBooks( int count )
+        {
+            var books = new List<BookModel>();
+            var data = await _context.Books
+                .Select(x => new BookModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Author = x.Author,
+                    Description = x.Description,
+                    ToTalPages = x.ToTalPages,
+                    CreatedOn = x.CreatedOn,
+                    UpdatedOn = x.UpdatedOn,
+                    LanguageId = x.LanguageId,
+                    Language = x.Language.Name,
+                    CoverImageUrl = x.CoverImageUrl
+                })
+                .Take(count)
+                .ToListAsync();
+
+            return data;
+        }
+
+
 
     }
 }

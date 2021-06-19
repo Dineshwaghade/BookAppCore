@@ -9,5 +9,7 @@ namespace CoreAppBook.Repository
         Task<int> AddNewBook(BookModel model);
         Task<List<BookModel>> GetAllBooks();
         Task<BookModel> GetBookById(int id);
+        Task<List<BookModel>> GetTopBooks(int count);
+
     }
 }
