@@ -33,6 +33,8 @@ namespace CoreAppBook
                 options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
                 ) ;
             services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>();
+            services.ConfigureApplicationCookie(config =>
+            config.LoginPath = "/Login");
 #if DEBUG
             //To disable client side validation
             //services.AddRazorPages().AddViewOptions(option =>
@@ -60,6 +62,7 @@ namespace CoreAppBook
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

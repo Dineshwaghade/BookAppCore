@@ -1,5 +1,6 @@
 ﻿using CoreAppBook.Models;
 using CoreAppBook.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,7 @@ namespace CoreAppBook.Controllers
             return View(data);
         }
 
+        [Authorize]
         public async Task<ViewResult> AddBook(bool isSuccess=false,int BookId=0)
         {
 

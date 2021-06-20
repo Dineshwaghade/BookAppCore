@@ -53,13 +53,17 @@ namespace CoreAppBook.Controllers
         }
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login(SignInModel model)
+        public async Task<IActionResult> Login(SignInModel model,string returnUrl)
         {
             if(ModelState.IsValid)
             {
                 var result = await _accountRepository.PasswordSignInAsync(model);
                 if(result.Succeeded)
                 {
+                    if(!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
                     return RedirectToAction("index", "home");
                 }
                 ModelState.AddModelError("", "Invalid credentials");
