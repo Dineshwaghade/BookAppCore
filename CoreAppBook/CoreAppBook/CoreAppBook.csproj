@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\Book\cover\" />
     <Folder Include="wwwroot\Book\Gallery\" />
     <Folder Include="wwwroot\Book\pdf\" />
