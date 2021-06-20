@@ -1,4 +1,5 @@
 using CoreAppBook.Data;
+using CoreAppBook.Models;
 using CoreAppBook.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,7 +32,7 @@ namespace CoreAppBook
             services.AddDbContext<BookStoreContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
                 ) ;
-            services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>();
+            services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>();
 #if DEBUG
             //To disable client side validation
             //services.AddRazorPages().AddViewOptions(option =>
