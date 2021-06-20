@@ -1,5 +1,6 @@
 ﻿using CoreAppBook.Models;
 using CoreAppBook.Repository;
+using CoreAppBook.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,13 @@ namespace CoreAppBook.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountRepository _accountRepository=null;
+        private readonly IUserService _userService=null;
 
-        public AccountController(IAccountRepository accountRepository)
+        public AccountController(IAccountRepository accountRepository, IUserService userService)
         {
             _accountRepository = accountRepository;
+            _userService = userService;
+            
         }
         public IActionResult Index()
         {
@@ -76,6 +80,30 @@ namespace CoreAppBook.Controllers
         {
             await _accountRepository.SignOutAsync();
             return RedirectToAction("index", "home");
+        }
+        [Route("change-password")]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var result = await _accountRepository.ChangePasswordAsync(model);
+                if(result.Succeeded)
+                {
+                    ViewBag.isSuccess = true;
+                    ModelState.Clear();
+                    return View();
+                }
+                foreach(var err in result.Errors)
+                {
+                    ModelState.AddModelError("", err.Description);
+                }
+            }
+            return View(model);
         }
 
     }

@@ -9,6 +9,7 @@ namespace CoreAppBook.Repository
         Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel);
         Task<SignInResult> PasswordSignInAsync(SignInModel model);
         Task SignOutAsync();
+        Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model);
 
     }
 }

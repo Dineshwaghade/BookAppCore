@@ -1,4 +1,5 @@
 ﻿using CoreAppBook.Models;
+using CoreAppBook.Services;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ namespace CoreAppBook.Repository
     {
         private readonly UserManager<ApplicationUser> _userManager = null;
         private readonly SignInManager<ApplicationUser> _signInManager=null;
+        private readonly IUserService _userService=null;
 
-        public AccountRepository(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager)
+        public AccountRepository(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager, IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userService = userService;
         }
         public async Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel)
         {
@@ -37,6 +40,12 @@ namespace CoreAppBook.Repository
         public async Task SignOutAsync()
         {
              await _signInManager.SignOutAsync();
+        }
+        public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model)
+        {
+            var userid =  _userService.GetUserId();
+            var user = await _userManager.FindByIdAsync(userid);
+            return await _userManager.ChangePasswordAsync(user,model.CurrentPassword,model.NewPassword);
         }
     }
 }
