@@ -25,8 +25,11 @@ namespace CoreAppBook.Controllers
         {
             UserEmailOptions options = new UserEmailOptions()
             {
-                ToEmails = new List<string> { "facebookphp470@gmail.com" }
-
+                ToEmails = new List<string> { "facebookphp470@gmail.com" },
+                Placeholder =new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{Username}}", "Dinesh" )
+                }
             };
             await _emailService.SendTestEmail(options);
             return View();

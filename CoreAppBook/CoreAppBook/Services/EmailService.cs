@@ -21,8 +21,8 @@ namespace CoreAppBook.Services
         }
         public async Task SendTestEmail(UserEmailOptions userEmailOptions)
         {
-            userEmailOptions.Subject = "Hi this is test";
-            userEmailOptions.Body = GetEmailBody("TestEmail");
+            userEmailOptions.Subject = UpdatePlaceholder("Hello {{Username}} this is tes email",userEmailOptions.Placeholder);
+            userEmailOptions.Body = UpdatePlaceholder(GetEmailBody("TestEmail"), userEmailOptions.Placeholder);
             await SendEmail(userEmailOptions);
         }
         private async Task SendEmail(UserEmailOptions userEmailOptions)
@@ -54,6 +54,21 @@ namespace CoreAppBook.Services
         {
             var body = File.ReadAllText(string.Format(templatePath, templateName));
             return body;
+        }
+        private string UpdatePlaceholder(string text, List<KeyValuePair<string,string>> keyvaluepair)
+        {
+            if(!string.IsNullOrEmpty(text) && keyvaluepair!=null)
+            {
+                foreach (var placeholder in keyvaluepair)
+                {
+                    if (text.Contains(placeholder.Key))
+                    {
+                        text = text.Replace(placeholder.Key, placeholder.Value);
+                    }
+                }
+
+            }
+            return text;
         }
     }
 }
