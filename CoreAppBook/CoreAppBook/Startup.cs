@@ -43,7 +43,8 @@ namespace CoreAppBook
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredUniqueChars = 1;
-            }); ;
+            });
+            services.Configure<SMTPConfigModel>(_configuration.GetSection("SMTPConfig"));
 #if DEBUG
             //To disable client side validation
             //services.AddRazorPages().AddViewOptions(option =>
@@ -54,7 +55,7 @@ namespace CoreAppBook
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
             services.AddScoped<IUserService, UserService>();
-            
+            services.AddScoped<IEmailService, EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
