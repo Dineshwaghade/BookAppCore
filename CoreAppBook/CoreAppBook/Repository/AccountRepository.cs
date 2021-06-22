@@ -1,6 +1,7 @@
 ﻿using CoreAppBook.Models;
 using CoreAppBook.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,17 @@ namespace CoreAppBook.Repository
         private readonly UserManager<ApplicationUser> _userManager = null;
         private readonly SignInManager<ApplicationUser> _signInManager=null;
         private readonly IUserService _userService=null;
+        private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
-        public AccountRepository(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager, IUserService userService)
+        public AccountRepository(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager, IUserService userService,
+            IConfiguration configuration,IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _userService = userService;
+            _configuration = configuration;
+            _emailService = emailService;
         }
         public async Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel)
         {
@@ -30,6 +36,14 @@ namespace CoreAppBook.Repository
                 UserName = userModel.Email
             };
             var result = await _userManager.CreateAsync(user, userModel.Password);
+            if(result.Succeeded)
+            {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                if(!string.IsNullOrEmpty(token))
+                {
+                    await SendEmailConfirmationEmail(user, token);
+                }
+            }
             return result;
         }
         public async Task<SignInResult> PasswordSignInAsync(SignInModel model)
@@ -43,9 +57,28 @@ namespace CoreAppBook.Repository
         }
         public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model)
         {
-            var userid =  _userService.GetUserId();
+            var userid = _userService.GetUserId();
             var user = await _userManager.FindByIdAsync(userid);
-            return await _userManager.ChangePasswordAsync(user,model.CurrentPassword,model.NewPassword);
+            return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+        }
+        public async Task<IdentityResult> ConfirmEmailAsync(string uid,string token)
+        {
+            return await _userManager.ConfirmEmailAsync(await _userManager.FindByIdAsync(uid), token);
+        }
+        private async Task SendEmailConfirmationEmail(ApplicationUser usr, string token)
+        {
+            string appDomain = _configuration.GetSection("Application:AppDomain").Value;
+            string link = _configuration.GetSection("Application:EmailConfirmation").Value;
+            UserEmailOptions option = new UserEmailOptions()
+            {
+                ToEmails = new List<string> { usr.Email },
+                Placeholder = new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{Username}}",usr.FirstName),
+                    new KeyValuePair<string, string>("{{Link}}",string.Format(appDomain+link,usr.Id,token))
+                }
+            };
+            await _emailService.SendEmailForEmailConfirmation(option);
         }
     }
 }

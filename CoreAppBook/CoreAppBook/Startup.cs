@@ -33,7 +33,7 @@ namespace CoreAppBook
             services.AddDbContext<BookStoreContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
                 ) ;
-            services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>();
+            services.AddIdentity<ApplicationUser,IdentityRole>().AddEntityFrameworkStores<BookStoreContext>().AddDefaultTokenProviders();
             services.ConfigureApplicationCookie(config =>
             config.LoginPath = "/Login");
             services.Configure<IdentityOptions>(options =>
@@ -43,6 +43,7 @@ namespace CoreAppBook
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredUniqueChars = 1;
+                options.SignIn.RequireConfirmedEmail = true; //allow only verified email
             });
             services.Configure<SMTPConfigModel>(_configuration.GetSection("SMTPConfig"));
 #if DEBUG

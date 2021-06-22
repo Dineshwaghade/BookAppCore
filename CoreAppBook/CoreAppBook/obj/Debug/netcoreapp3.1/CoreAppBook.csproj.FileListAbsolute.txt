@@ -181,3 +181,4 @@ D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcor
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\CoreAppBook.pdb
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\CoreAppBook.genruntimeconfig.cache
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\Razor\Views\Account\ChangePassword.cshtml.g.cs
+D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\Razor\Views\Account\ConfirmEmail.cshtml.g.cs

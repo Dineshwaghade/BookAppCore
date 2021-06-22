@@ -105,6 +105,20 @@ namespace CoreAppBook.Controllers
             }
             return View(model);
         }
+        [HttpGet("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail(string uid, string token)
+        {
+            token = token.Replace(' ','+');
+            if(!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
+            {
+                var result =await _accountRepository.ConfirmEmailAsync(uid, token);
+                if(result.Succeeded)
+                {
+                    ViewBag.IsSuccess = true;
+                }
+            }
+            return View();
+        }
 
     }
 }

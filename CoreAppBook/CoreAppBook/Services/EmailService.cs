@@ -25,6 +25,12 @@ namespace CoreAppBook.Services
             userEmailOptions.Body = UpdatePlaceholder(GetEmailBody("TestEmail"), userEmailOptions.Placeholder);
             await SendEmail(userEmailOptions);
         }
+        public async Task SendEmailForEmailConfirmation(UserEmailOptions userEmailOptions)
+        {
+            userEmailOptions.Subject = UpdatePlaceholder("Hello {{Username}} confirm your email id", userEmailOptions.Placeholder);
+            userEmailOptions.Body = UpdatePlaceholder(GetEmailBody("EmailConfirmation"), userEmailOptions.Placeholder);
+            await SendEmail(userEmailOptions);
+        }
         private async Task SendEmail(UserEmailOptions userEmailOptions)
         {
             MailMessage mail = new MailMessage()
