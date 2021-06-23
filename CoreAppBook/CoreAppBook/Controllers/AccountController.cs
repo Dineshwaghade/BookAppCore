@@ -175,8 +175,6 @@ namespace CoreAppBook.Controllers
             UserEmailOptions options = new UserEmailOptions()
             {
                 ToEmails = new List<string> { "facebookphp470@gmail.com" },
-                Subject=model.Subject,
-                Body=model.Body
                 Placeholder = new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("{{Username}}", "Dinesh" )
