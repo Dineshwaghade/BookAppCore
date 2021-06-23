@@ -42,7 +42,7 @@ namespace CoreAppBook.Controllers
             return View(data);
         }
 
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         public async Task<ViewResult> AddBook(bool isSuccess=false,int BookId=0)
         {
 
@@ -56,6 +56,12 @@ namespace CoreAppBook.Controllers
             ViewBag.IsSuccess = isSuccess;
             ViewBag.BookId = BookId;
             return View();
+        }
+        [HttpGet]
+        [Route("/Account/AccessDenied")]
+        public ViewResult AccessDenied()
+        {
+            return View("Accessdenied");
         }
         [HttpPost]
         public async Task<IActionResult> AddBook( BookModel model)
