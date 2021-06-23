@@ -34,12 +34,16 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Book" asp-action="GetAllbooks">Get All Books</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Book" asp-action="AddBook">Add Book</a>
-                        </li>
-                        <li class="nav-item">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Book" asp-action="AddBook">Add Book</a>
+                            </li>
+
+                        }
+                        @*<li class="nav-item">
                             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
+                        </li>*@
                     </ul>
                     <ul class="navbar-nav d-flex">
                         <partial name="_LoginInfo" />

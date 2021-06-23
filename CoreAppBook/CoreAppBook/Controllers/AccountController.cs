@@ -13,12 +13,14 @@ namespace CoreAppBook.Controllers
     {
         private readonly IAccountRepository _accountRepository=null;
         private readonly IUserService _userService=null;
+        private readonly IEmailService _emailService;
 
-        public AccountController(IAccountRepository accountRepository, IUserService userService)
+        public AccountController(IAccountRepository accountRepository, IUserService userService, IEmailService emailService)
         {
             _accountRepository = accountRepository;
             _userService = userService;
-            
+            _emailService = emailService;
+
         }
         public IActionResult Index()
         {
@@ -168,7 +170,20 @@ namespace CoreAppBook.Controllers
             }
             return View();
         }
-
-
+        public async Task<IActionResult> Email(UserEmailOptions model)
+        {
+            UserEmailOptions options = new UserEmailOptions()
+            {
+                ToEmails = new List<string> { "facebookphp470@gmail.com" },
+                Subject=model.Subject,
+                Body=model.Body
+                Placeholder = new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{Username}}", "Dinesh" )
+                }
+            };
+            await _emailService.SendTestEmail(options);
+            return View();
+        }
     }
 }

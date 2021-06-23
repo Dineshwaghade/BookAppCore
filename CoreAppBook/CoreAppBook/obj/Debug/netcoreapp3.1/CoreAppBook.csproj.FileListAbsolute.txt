@@ -185,3 +185,4 @@ D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcor
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\Razor\Views\Account\ForgotPassword.cshtml.g.cs
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPassword.cshtml.g.cs
 D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\AccessDenied.cshtml.g.cs
+D:\Practice\CorePractice\CoreGitProject\CoreAppBook\CoreAppBook\obj\Debug\netcoreapp3.1\Razor\Views\Account\Email.cshtml.g.cs
