@@ -11,6 +11,9 @@ namespace CoreAppBook.Repository
         Task SignOutAsync();
         Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model);
         Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
+        Task<ApplicationUser> GetUserByEmail(string email);
+        Task GenerateForgotPasswordToken(ApplicationUser user);
+        Task<bool> ResetPassword(ResetPasswordModel model);
 
     }
 }

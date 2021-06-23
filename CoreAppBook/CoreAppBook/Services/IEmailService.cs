@@ -7,5 +7,6 @@ namespace CoreAppBook.Services
     {
         Task SendTestEmail(UserEmailOptions userEmailOptions);
         Task SendEmailForEmailConfirmation(UserEmailOptions userEmailOptions);
+        Task SendEmailForResetPassword(UserEmailOptions userEmailOptions);
     }
 }

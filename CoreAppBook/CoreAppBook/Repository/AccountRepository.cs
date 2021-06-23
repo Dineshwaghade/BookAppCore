@@ -46,6 +46,15 @@ namespace CoreAppBook.Repository
             }
             return result;
         }
+        public async Task GenerateForgotPasswordToken(ApplicationUser user)
+        {
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            if (!string.IsNullOrEmpty(token))
+            {
+                await SendEmailForForResetPassword(user, token);
+            }
+
+        }
         public async Task<SignInResult> PasswordSignInAsync(SignInModel model)
         {
             var result=await _signInManager.PasswordSignInAsync(model.Email,model.Password,model.RememberMe,false);
@@ -80,5 +89,36 @@ namespace CoreAppBook.Repository
             };
             await _emailService.SendEmailForEmailConfirmation(option);
         }
+        private async Task SendEmailForForResetPassword(ApplicationUser usr, string token)
+        {
+            string appDomain = _configuration.GetSection("Application:AppDomain").Value;
+            string link = _configuration.GetSection("Application:ResetPassword").Value;
+            UserEmailOptions option = new UserEmailOptions()
+            {
+                ToEmails = new List<string> { usr.Email },
+                Placeholder = new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{Username}}",usr.FirstName),
+                    new KeyValuePair<string, string>("{{Link}}",string.Format(appDomain+link,usr.Id,token))
+                }
+            };
+            await _emailService.SendEmailForResetPassword(option);
+        }
+        public async Task<ApplicationUser> GetUserByEmail(string email)
+        {
+            var user= await _userManager.FindByEmailAsync(email);
+            return user;
+        }
+        public async Task<bool> ResetPassword(ResetPasswordModel model)
+        {
+            ApplicationUser user =await _userManager.FindByIdAsync(model.uid);
+            IdentityResult result=await _userManager.ResetPasswordAsync(user, model.token, model.NewPassword);
+            if(result.Succeeded)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

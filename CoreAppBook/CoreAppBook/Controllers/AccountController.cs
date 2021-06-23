@@ -119,6 +119,56 @@ namespace CoreAppBook.Controllers
             }
             return View();
         }
+        [HttpGet("forgot-password")]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var user = await _accountRepository.GetUserByEmail(model.Email);
+                if(user!=null)
+                {
+                    await _accountRepository.GenerateForgotPasswordToken(user);
+                    ModelState.Clear();
+                    model.EmailSent = true;
+                }
+            }
+            return View(model);
+        }
+        [HttpGet("Reset-password")]
+        public async Task<IActionResult> ResetPassword(string uid, string token)
+        {
+            ResetPasswordModel model = new ResetPasswordModel()
+            {
+                uid = uid,
+                token = token
+            };
+            return View();
+        }
+        [HttpPost("Reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                model.token= model.token.Replace(' ', '+');
+                bool isReset= await _accountRepository.ResetPassword(model);
+                if (isReset)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                else
+                {
+                    ViewBag.error = true;
+                }
+            }
+            return View();
+        }
+
 
     }
 }

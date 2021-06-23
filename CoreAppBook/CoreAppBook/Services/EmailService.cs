@@ -31,6 +31,13 @@ namespace CoreAppBook.Services
             userEmailOptions.Body = UpdatePlaceholder(GetEmailBody("EmailConfirmation"), userEmailOptions.Placeholder);
             await SendEmail(userEmailOptions);
         }
+        public async Task SendEmailForResetPassword(UserEmailOptions userEmailOptions)
+        {
+            userEmailOptions.Subject = UpdatePlaceholder("Hello {{Username}} reset your password", userEmailOptions.Placeholder);
+            userEmailOptions.Body = UpdatePlaceholder(GetEmailBody("ForgotPassword"), userEmailOptions.Placeholder);
+            await SendEmail(userEmailOptions);
+        }
+
         private async Task SendEmail(UserEmailOptions userEmailOptions)
         {
             MailMessage mail = new MailMessage()
